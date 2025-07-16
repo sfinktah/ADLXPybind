@@ -1,0 +1,10 @@
+include README.md
+include ADLXPybind/__init__.py
+include ADLXPybind/*.pyi
+include stubs/ADLXPybind/*.pyi
+recursive-exclude ADLXPybind/ADLX *
+graft src
+prune build
+prune dist
+prune .git
+prune ADLX
