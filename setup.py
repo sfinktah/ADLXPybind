@@ -134,7 +134,7 @@ def create_extension():
     ]
 
     return Extension(
-        "_adlx_pybind",
+        "ADLXPybind._adlx_pybind",
         sources=sources,
         include_dirs=include_dirs,
         define_macros=[
