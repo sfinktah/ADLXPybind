@@ -62,7 +62,7 @@ class CustomBuildExt(build_ext):
                 print(f"Absolute path: {file_path.absolute()}")
                 raise FileNotFoundError(f"Required ADLX file not found: {file_path}")
             else:
-                print(f"✓ Found: {file_path}")
+                print(f"Found: {file_path}")
 
         print("ADLX repository setup complete")
 
