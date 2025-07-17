@@ -36,10 +36,10 @@ jobs:
           packages-dir: dist/
     # If you’re using trusted publishing, this will work out of the box.
     # If you are NOT using PyPI trusted publishing, uncomment below and set a secret named PYPI_TOKEN:
-    # - name: Publish using Twine (Classic API Token)
-    #   env:
-    #     TWINE_USERNAME: __token__
-    #     TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-    #   run: |
-    #     python -m pip install --upgrade twine
-    #     twine upload dist/*.whl
+      - name: Publish using Twine (Classic API Token)
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m pip install --upgrade twine
+          twine upload dist/*.whl
