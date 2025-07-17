@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build-windows:
@@ -56,10 +57,10 @@ jobs:
       - name: List all wheels
         run: ls -l dist
 
-      - name: Publish all wheels to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages-dir: dist/
+      #      - name: Publish all wheels to PyPI
+      #        uses: pypa/gh-action-pypi-publish@release/v1
+      #        with:
+      #          packages-dir: dist/
 
       # Optional fallback: Classic API Token (if not using Trusted Publishing)
       - name: Publish using Twine (Classic API Token)
