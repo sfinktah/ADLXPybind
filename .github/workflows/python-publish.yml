@@ -1,4 +1,4 @@
-name: Publish Windows Wheel to PyPI
+name: Publish Windows Wheels to PyPI
 
 on:
   workflow_dispatch:
@@ -18,13 +18,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download Windows wheel
+      # Download all wheel artifacts from known Python versions
+      - name: Download Windows wheels (Python 3.10)
         uses: actions/download-artifact@v4
         with:
-          name: windows-wheel
+          name: windows-wheel-3.10
           path: dist
 
-      - name: Publish Windows wheel to PyPI
+      - name: Download Windows wheels (Python 3.11)
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-wheel-3.11
+          path: dist
+
+      - name: Download Windows wheels (Python 3.12)
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-wheel-3.12
+          path: dist
+
+      - name: Download Windows wheels (Python 3.13)
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-wheel-3.13
+          path: dist
+
+      # Publish all wheels in dist/ to PyPI
+      - name: Publish Windows wheels to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: dist/
