@@ -1,0 +1,71 @@
+name: Build and Publish Windows Wheels
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    outputs:
+      wheel-names: ${{ steps.upload-wheel.outputs.artifact-name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Upgrade build tools
+        run: python -m pip install --upgrade pip build
+
+      - name: Install pybind11-stubgen (for stub generation)
+        run: python -m pip install --upgrade pybind11-stubgen
+
+      - name: Build Windows wheel
+        run: python -m build --wheel
+
+      - name: Upload Windows wheel
+        id: upload-wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-wheel-${{ matrix.python-version }}
+          path: dist/*.whl
+
+  publish:
+    needs: build-windows
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Download all wheels produced by the build matrix
+      - name: Download all wheel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: windows-wheel-*
+          path: dist
+
+      - name: List all wheels
+        run: ls -l dist
+
+      - name: Publish all wheels to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
+
+      # Optional fallback: Classic API Token (if not using Trusted Publishing)
+      - name: Publish using Twine (Classic API Token)
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python -m pip install --upgrade twine
+          twine upload dist/**/*.whl
