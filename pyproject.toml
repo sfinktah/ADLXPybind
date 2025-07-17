@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ADLXPybind"
-version = "1.4.4"
+version = "1.4.5"
 description = "Python bindings for AMD Device Library Extra (ADLX) 1.4"
 readme = "README.md"
 license = {text = "MIT"}

@@ -6,6 +6,7 @@ ADLXPybind.egg-info/
 
 # Publish Helpers
 *.sh
+*.backup
 
 # Downloaded ADXL source
 ADLXPybind/ADLX/
