@@ -1,6 +1,7 @@
 name: Build Windows Wheel
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
 

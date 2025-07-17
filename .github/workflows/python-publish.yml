@@ -1,6 +1,7 @@
 name: Publish Windows Wheel to PyPI
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["Build Windows Wheel"]
     types:
