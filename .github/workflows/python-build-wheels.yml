@@ -1,0 +1,33 @@
+name: Build Windows Wheel
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Upgrade build tools
+        run: python -m pip install --upgrade pip build
+
+      - name: Install pybind11-stubgen (for stub generation)
+        run: python -m pip install --upgrade pybind11-stubgen
+
+      - name: Build Windows wheel
+        run: python -m build --wheel
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-wheel
+          path: dist/*.whl
