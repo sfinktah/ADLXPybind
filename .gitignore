@@ -4,6 +4,9 @@ dist/
 *.egg-info/
 ADLXPybind.egg-info/
 
+# Publish Helpers
+*.sh
+
 # Downloaded ADXL source
 ADLXPybind/ADLX/
 

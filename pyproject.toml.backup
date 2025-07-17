@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "pybind11>=2.6.0", "pybind11-stubgen>=0.10.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ADLXPybind"
+version = "1.4.3"
+description = "Python bindings for AMD Device Library Extra (ADLX) 1.4"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "sfinktah", email = "sfinktah@github.spamtrak.org"},
+]
+requires-python = ">=3.6"
+dependencies = [
+    "pybind11>=2.6.0",
+    "pybind11-stubgen>=0.10.0",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: Microsoft :: Windows",
+]
+
+[project.urls]
+Homepage = "https://github.com/sfinktah/ADLXPybind"
+Repository = "https://github.com/sfinktah/ADLXPybind"
+
+[tool.setuptools]
+packages = ["ADLXPybind"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+ADLXPybind = ["*.pyi"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["ADLX/**/*"]

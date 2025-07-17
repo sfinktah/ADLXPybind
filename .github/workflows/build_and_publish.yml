@@ -1,0 +1,36 @@
+name: Build and publish Python wheels
+
+on:
+  push:
+    tags:
+      - 'v*'        # Only trigger on version tags, e.g., v1.4.4
+
+jobs:
+  build-and-publish:
+    runs-on: windows-latest
+
+    steps:
+      # Check out your code
+      - uses: actions/checkout@v4
+
+      # Set up Python (cibuildwheel will find all Pythons using official installers)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Install cibuildwheel and twine
+      - name: Install build tools
+        run: |
+          pip install cibuildwheel twine
+
+      # Build wheels for all Python versions
+      - name: Build wheels
+        run: python -m cibuildwheel --output-dir dist
+
+      # Publish to PyPI
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: twine upload dist/*
